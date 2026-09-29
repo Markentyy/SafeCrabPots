@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using SafeCrabPots.Framework;
 using StardewModdingAPI;
@@ -15,10 +16,18 @@ public sealed class ModEntry : Mod
         Instance = this;
         Config = helper.ReadConfig<ModConfig>();
 
-        var harmony = new Harmony(ModManifest.UniqueID);
-        CrabPotPatch.Apply(harmony);
-
+        // Subscribe first: a patch failure must never kill GMCM registration again.
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
+
+        try
+        {
+            var harmony = new Harmony(ModManifest.UniqueID);
+            CrabPotPatch.Apply(harmony);
+        }
+        catch (Exception ex)
+        {
+            Monitor.Log($"Failed to apply Harmony patches, some features will be unavailable:\n{ex}", LogLevel.Error);
+        }
     }
 
     private void OnGameLaunched(object sender, StardewModdingAPI.Events.GameLaunchedEventArgs e)

@@ -92,7 +92,7 @@ internal static class CrabPotPatch
 
     /// <summary>Blocks dismantle hits from non-configured tools. Only axe/pickaxe can remove pots in vanilla.</summary>
     /// <returns>False to swallow the hit, true to run vanilla.</returns>
-    private static bool PerformToolAction_Prefix(StardewValley.Object __instance, Tool t, GameLocation location)
+    private static bool PerformToolAction_Prefix(StardewValley.Object __instance, Tool t)
     {
         if (__instance is not CrabPot)
             return true;
