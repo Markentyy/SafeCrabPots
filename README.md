@@ -72,7 +72,7 @@ No save changes; safe to add or remove at any time.
 
 ## Known limitations
 
-- No gamepad support in v1.0 (the retrieve modifier is keyboard-only). Gamepad players: use `RightClickPickup: Always`. A gamepad button option is planned once a volunteer tester is found.
+- Gamepad: assign any controller button (e.g. `LeftTrigger`) to `Retrieve modifier` in GMCM, or write `"RetrieveModifier": "LeftTrigger"` in `config.json`. Keybinds are device-agnostic, no extra setup needed. Untested on real hardware, feedback welcome.
 
 ## Screenshots
 
