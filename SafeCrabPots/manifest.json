@@ -1,8 +1,8 @@
 {
   "Name": "Safe Crab Pots",
   "Author": "Markentyy",
-  "Version": "1.0.0",
-  "Description": "Stops accidental crab pot pickups: right-click harvests (and auto-rebaits from hand), tools other than the configured dismantle tool can't remove pots.",
+  "Version": "1.0.1",
+  "Description": "Stop losing crab pots to misclicks: right-click harvests and auto-rebaits, empty pots are only picked up with the modifier held.",
   "UniqueID": "Markentyy.SafeCrabPots",
   "EntryDll": "SafeCrabPots.dll",
   "MinimumApiVersion": "4.0.0",
