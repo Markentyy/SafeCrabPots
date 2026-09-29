@@ -1,0 +1,19 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+
+# OS
+.DS_Store
+Thumbs.db
+*~
+
+# Release artifacts (built locally, not committed)
+*.zip
