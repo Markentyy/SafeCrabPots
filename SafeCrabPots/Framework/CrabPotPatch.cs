@@ -1,10 +1,7 @@
-using System;
 using HarmonyLib;
-using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Objects;
-using StardewValley.Tools;
 
 namespace SafeCrabPots.Framework;
 
@@ -24,10 +21,6 @@ internal static class CrabPotPatch
             original: AccessTools.Method(typeof(CrabPot), nameof(CrabPot.checkForAction)),
             prefix: new HarmonyMethod(typeof(CrabPotPatch), nameof(CheckForAction_Prefix)),
             postfix: new HarmonyMethod(typeof(CrabPotPatch), nameof(CheckForAction_Postfix))
-        );
-        harmony.Patch(
-            original: AccessTools.Method(typeof(StardewValley.Object), nameof(StardewValley.Object.performToolAction)),
-            prefix: new HarmonyMethod(typeof(CrabPotPatch), nameof(PerformToolAction_Prefix))
         );
     }
 
@@ -51,19 +44,20 @@ internal static class CrabPotPatch
             return true;
 
         // Empty, unbaited pot: vanilla would pick it up on click. Apply the mode.
+        // (Tools can't remove pots from water, so click removal is the only path.)
         string mode = ModEntry.Config.RightClickPickup;
         if (mode == "Always")
             return true;
 
-        if (mode == "BeyondReach" && !IsWithinToolReach(who, __instance))
+        if (mode == "Modifier" || mode == "BeyondReach") // "BeyondReach" is the pre-1.0 name, kept for old configs
         {
             if (IsRetrieveModifierHeld())
-                return true; // deliberate retrieval of an out-of-reach pot
+                return true; // deliberate retrieval
             Game1.showRedMessage($"Hold {ModEntry.Config.RetrieveModifier} + right-click to retrieve");
             return false;
         }
 
-        return false; // "Off", or "BeyondReach" within tool reach: swallow the pickup
+        return false; // "Off": swallow the pickup
     }
 
     /// <summary>One-click rebait: after a real harvest, insert bait from hand if configured.</summary>
@@ -88,30 +82,6 @@ internal static class CrabPotPatch
             return;
         if (__instance.performObjectDropInAction(held, probe: false, who: who))
             who.reduceActiveItemByOne();
-    }
-
-    /// <summary>Blocks dismantle hits from non-configured tools. Only axe/pickaxe can remove pots in vanilla.</summary>
-    /// <returns>False to swallow the hit, true to run vanilla.</returns>
-    private static bool PerformToolAction_Prefix(StardewValley.Object __instance, Tool t)
-    {
-        if (__instance is not CrabPot)
-            return true;
-        if (t is not Axe && t is not Pickaxe)
-            return true; // other tools are harmless in vanilla, leave them alone
-
-        string mode = ModEntry.Config.DismantleTool;
-        bool allowed = mode == "Any"
-            || (mode == "Pickaxe" && t is Pickaxe)
-            || (mode == "Axe" && t is Axe);
-        return allowed;
-    }
-
-    /// <summary>Tool reach is one tile: the pot must be adjacent (Chebyshev distance 1 or less).</summary>
-    private static bool IsWithinToolReach(Farmer who, CrabPot pot)
-    {
-        Vector2 playerTile = who.Tile;
-        Vector2 potTile = pot.TileLocation;
-        return Math.Max(Math.Abs(playerTile.X - potTile.X), Math.Abs(playerTile.Y - potTile.Y)) <= 1;
     }
 
     private static bool IsRetrieveModifierHeld()

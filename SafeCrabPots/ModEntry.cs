@@ -16,6 +16,13 @@ public sealed class ModEntry : Mod
         Instance = this;
         Config = helper.ReadConfig<ModConfig>();
 
+        // Migrate the pre-1.0 mode name to the new one.
+        if (Config.RightClickPickup == "BeyondReach")
+        {
+            Config.RightClickPickup = "Modifier";
+            helper.WriteConfig(Config);
+        }
+
         // Subscribe first: a patch failure must never kill GMCM registration again.
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
 
@@ -47,8 +54,8 @@ public sealed class ModEntry : Mod
             getValue: () => Config.RightClickPickup,
             setValue: value => Config.RightClickPickup = value,
             name: () => "Right-click pickup",
-            tooltip: () => "Off: right-click never picks pots up. BeyondReach: only out-of-reach pots, with the modifier held. Always: vanilla behavior.",
-            allowedValues: new[] { "Off", "BeyondReach", "Always" }
+            tooltip: () => "Off: right-click never picks pots up. Modifier: only with the retrieve key held. Always: vanilla behavior.",
+            allowedValues: new[] { "Off", "Modifier", "Always" }
         );
 
         gmcm.AddKeybindList(
@@ -56,16 +63,7 @@ public sealed class ModEntry : Mod
             getValue: () => Config.RetrieveModifier,
             setValue: value => Config.RetrieveModifier = value,
             name: () => "Retrieve modifier",
-            tooltip: () => "Held with right-click to retrieve out-of-reach pots in BeyondReach mode."
-        );
-
-        gmcm.AddTextOption(
-            mod: ModManifest,
-            getValue: () => Config.DismantleTool,
-            setValue: value => Config.DismantleTool = value,
-            name: () => "Dismantle tool",
-            tooltip: () => "Which tool hit removes crab pots. Other tools pass through harmlessly.",
-            allowedValues: new[] { "Pickaxe", "Axe", "Any", "None" }
+            tooltip: () => "Held with right-click to retrieve empty pots."
         );
 
         gmcm.AddBoolOption(

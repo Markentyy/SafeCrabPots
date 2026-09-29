@@ -6,11 +6,12 @@
 ![Stardew](https://img.shields.io/badge/Stardew_Valley-1.6-purple)
 
 Stop losing crab pots to misclicks. Right-click harvests (and auto-rebaits from hand),
-tools other than the configured dismantle tool pass through harmlessly.
+and empty pots are only picked up with a deliberate modifier + right-click.
 
 The vanilla pain, for reference: right-clicking an empty unbaited pot picks it up,
 so every harvest run risks pocketing pots instead of checking them. Luremaster players
-have it worst, since their pots never hold bait.
+have it worst, since their pots never hold bait. Tools can't remove pots from water,
+so click removal is the only path – this mod makes it deliberate.
 
 ## Contents
 
@@ -26,12 +27,11 @@ have it worst, since their pots never hold bait.
 
 ## Behavior
 
-| Situation | Right-click | Tool hit |
-|---|---|---|
-| Catch ready | harvest (+ auto-rebait if holding bait) | – |
-| Holding bait, no catch | bait the pot (vanilla) | – |
-| Empty pot, adjacent | nothing (pickup blocked) | configured tool dismantles, rest pass through |
-| Empty pot, out of tool reach | nothing, or Shift + right-click retrieves (`BeyondReach`) | can't reach |
+| Situation | Right-click |
+|---|---|
+| Catch ready | harvest (+ auto-rebait if holding bait) |
+| Holding bait, no catch | bait the pot (vanilla) |
+| Empty pot | nothing, or modifier + right-click retrieves (`Modifier`) |
 
 Pickup priority is always harvest > bait > retrieve: a pot with a catch is never picked up.
 
@@ -41,13 +41,12 @@ GMCM page (or `config.json` next to the DLL):
 
 | Option | Values | Default |
 |---|---|---|
-| `RightClickPickup` | `Off` / `BeyondReach` / `Always` | `BeyondReach` |
+| `RightClickPickup` | `Off` / `Modifier` / `Always` | `Modifier` |
 | `RetrieveModifier` | keybind | `LeftShift` |
-| `DismantleTool` | `Pickaxe` / `Axe` / `Any` / `None` | `Pickaxe` |
 | `AutoRebait` | on / off | on |
 
 - `Off`: right-click never picks pots up.
-- `BeyondReach`: adjacent pots are click-safe; out-of-reach pots are retrieved with modifier + right-click (a hint is shown without the modifier).
+- `Modifier`: empty pots are retrieved only with modifier + right-click (a hint is shown without the modifier).
 - `Always`: vanilla right-click behavior. Useful for gamepads (no modifier key) or diagnosing conflicts.
 
 ## Requirements
@@ -74,14 +73,13 @@ No save changes; safe to add or remove at any time.
 ## Known limitations
 
 - No gamepad support in v1.0 (the retrieve modifier is keyboard-only). Gamepad players: use `RightClickPickup: Always`. A gamepad button option is planned once a volunteer tester is found.
-- If `DismantleTool` is `None`, pots can only be removed by switching the option back. The option itself is the escape hatch.
 
 ## Screenshots
 
 > Placeholders – gameplay screenshots will be added here.
 
 - `docs/screenshots/harvest-rebait.png` – one-click harvest + rebait (TODO).
-- `docs/screenshots/hint.png` – retrieve hint on an out-of-reach pot (TODO).
+- `docs/screenshots/hint.png` – retrieve hint on an empty pot (TODO).
 
 ## Author
 
