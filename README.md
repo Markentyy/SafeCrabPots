@@ -1,6 +1,6 @@
 # Safe Crab Pots
 
-![version](https://img.shields.io/badge/version-1.0.1-blue)
+![version](https://img.shields.io/badge/version-1.0.2-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![SMAPI](https://img.shields.io/badge/SMAPI-4.x-orange)
 ![Stardew](https://img.shields.io/badge/Stardew_Valley-1.6-purple)

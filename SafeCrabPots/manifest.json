@@ -1,12 +1,12 @@
 {
   "Name": "Safe Crab Pots",
   "Author": "Markentyy",
-  "Version": "1.0.1",
+  "Version": "1.0.2",
   "Description": "Stop losing crab pots to misclicks: right-click harvests and auto-rebaits, empty pots are only picked up with the modifier held.",
   "UniqueID": "Markentyy.SafeCrabPots",
   "EntryDll": "SafeCrabPots.dll",
   "MinimumApiVersion": "4.0.0",
-  "UpdateKeys": [],
+  "UpdateKeys": [ "Nexus:53099" ],
   "Dependencies": [
     {
       "UniqueID": "spacechase0.GenericModConfigMenu",
