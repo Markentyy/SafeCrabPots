@@ -76,10 +76,9 @@ No save changes; safe to add or remove at any time.
 
 ## Screenshots
 
-> Placeholders – gameplay screenshots will be added here.
+Retrieve hint shown when right-clicking an empty pot without the modifier:
 
-- `docs/screenshots/harvest-rebait.png` – one-click harvest + rebait (TODO).
-- `docs/screenshots/hint.png` – retrieve hint on an empty pot (TODO).
+![Retrieve hint](docs/screenshots/hint.png)
 
 ## Author
 
